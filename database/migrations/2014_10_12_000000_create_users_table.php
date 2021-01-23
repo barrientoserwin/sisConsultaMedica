@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->date('fechaNac')->nullable();
             $table->string('telefono',10)->nullable();
             $table->string('direccion')->nullable();
-            $table->string('rolUsuario',40)->nullable();
+            $table->string('rolUsuario',40);
 
             $table->rememberToken();
             $table->timestamps();

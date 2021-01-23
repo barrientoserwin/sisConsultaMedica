@@ -13,7 +13,7 @@ $(function () {
 
   $especialidad.change(() => {
     const idEspecialidad = $especialidad.val();
-    const url = `/especialidad/medico/${idEspecialidad}`;
+    const url = `/api/especialidad/medico/${idEspecialidad}`;
     $.getJSON(url, onMedicoLoad);
   });
 
@@ -33,7 +33,7 @@ function onMedicoLoad(medicos) {
 function loadHours() {
 	const selectedDate = $date.val();
 	const medicoId = $medico.val();
-	const url = `/diastrabajo/hours?date=${selectedDate}&idMedico=${medicoId}`;
+	const url = `/api/diastrabajo/hours?date=${selectedDate}&idMedico=${medicoId}`;
     $.getJSON(url, displayHours);
 }
 

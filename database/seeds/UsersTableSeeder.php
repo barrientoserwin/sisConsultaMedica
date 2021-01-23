@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // 1        
-        DB::table('users')->insert([
+        User::create([
             'name' => 'Erwin',
 	        'email' => 'barrientoserwin381@gmail.com',
 	        'password' => bcrypt('123456789'),
@@ -27,23 +26,23 @@ class UsersTableSeeder extends Seeder
         ]);
 
         // 2
-        DB::table('users')->insert([
-    		'name' => 'Mikasa',
-	        'email' => 'mikasacj381@gmail.com',
+        User::create([
+    		'name' => 'Aylin',
+	        'email' => 'mendoza381@gmail.com',
 	        'password' => bcrypt('123456789'),
-            'apellidos' => 'Barrientos',
-            'dni' => '8205957',
-            'fechaNac' => '2015/12/20',
+            'apellidos' => 'Mendoza Villca',
+            'dni' => '8205922',
+            'fechaNac' => '1995/08/01',
             'telefono' => '73119361',
             'direccion' => 'B/ Urkupiña C/Audifas Parada',
             'rolUsuario' => 'paciente',
     	]);
 
         // 3
-        DB::table('users')->insert([
+        User::create([
     		'name' => 'Albina',
 	        'email' => 'barrientosalbina189@gmail.com',
-	        'password' => bcrypt('987654321'),
+	        'password' => bcrypt('123456789'),
             'apellidos' => 'Barrientos Mamani',
             'dni' => '8109999',
             'fechaNac' => '1995/09/18',

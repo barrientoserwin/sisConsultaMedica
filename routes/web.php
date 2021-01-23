@@ -73,6 +73,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/consultamedica/confirmar/{id}', 'ConsultaMedicaController@confirmarConsulta');
 
     //JSON
-    Route::get('/especialidad/medico/{id}', 'Api\EspecialidadController@medicos');
-    Route::get('/diastrabajo/hours', 'Api\DiasTrabajoController@hours');
+    //Route::get('/especialidad/medico/{id}', 'Api\EspecialidadController@medicos');
+    //Route::get('/diastrabajo/hours', 'Api\DiasTrabajoController@hours');
 });

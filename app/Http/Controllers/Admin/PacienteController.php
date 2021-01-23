@@ -29,7 +29,7 @@ class PacienteController extends Controller
         $user = User::create(
             $request->only('name', 'email', 'apellidos', 'dni', 'fechaNac','telefono', 'direccion')
             + [
-                'rolUsuario' => 'Paciente',
+                'rolUsuario' => 'paciente',
                 'password' => bcrypt($request->input('password'))
             ]
         );
