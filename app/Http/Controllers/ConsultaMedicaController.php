@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Interfaces\DiasTrabajoServiceInterface;
+use App\Http\Requests\StoreConsultaMedica;
 use App\ConsultaMedica;
 use App\CancelarConsulta;
 use App\Especialidad;
@@ -138,64 +139,14 @@ class ConsultaMedicaController extends Controller
         return view('consultamedica.create', compact('especialidad','medico','intervalo'));
     }
 
-    public function store(Request $request, DiasTrabajoServiceInterface $diasTrabajoService){        
-        $rules=[
-            'descripcion'=>'required',
-            'idEspecialidad'=>'exists:especialidad,id',
-            'idMedico'=>'exists:users,id',
-            'horaConsulta'=>'required',
-        ];
-        $messages=[
-            'horaConsulta.required'=>'Por favor seleccione una hora valida para su cita'
-        ];
-
-        $validator = Validator::make($request->all(),$rules,$messages);
-        // $this->validate($request,$rules,$messages);
-        $validator->after(function ($validator) use ($request,$diasTrabajoService){
-            $date = $request->fechaConsulta;
-            $medicoId = $request->idMedico;
-            $horaConsulta = $request->horaConsulta;
-            if($date && $medicoId && $horaConsulta){
-                $start = new Carbon($horaConsulta);
-            } else{
-                return;
-            }
-
-            if(!$diasTrabajoService->isAvailableInterval($date, $medicoId, $start)){
-                $validator->errors()
-                ->add('horaDisponible','La hora seleccionada ya se encuentra reservada por otro paciente');
-            }
-        });
-
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(StoreConsultaMedica $request){
+    	$created = ConsultaMedica::createForPaciente($request, \Auth::user()->id);
+        if ($created)
+    	   $notificacion = 'La cita se ha registrado correctamente!';
+        else
+           $notificacion = 'Ocurrió un problema al registrar la cita médica.';
         
-        $data = $request->only([
-            'descripcion',
-            'fechaConsulta',
-            'horaConsulta',
-            'observacion',
-            'tipoConsulta',
-            'idMedico',
-            'idEspecialidad'
-        ]);
-        $data['estado']='Reservada';
-        $data['idPaciente']=\Auth::user()->id;
-        $carbonTime= Carbon::createFromFormat('g:i A',$data['horaConsulta']);
-        $data['horaConsulta']= $carbonTime->format('H:i:s');
-        //$created = ConsultaMedica::create($data);
-        ConsultaMedica::create($data);
-    	//$created = Appointment::createForPatient($request, auth()->id());
-
-        // if ($created)
-    	//    $notification = 'La cita se ha registrado correctamente!';
-        // else
-        //    $notification = 'Ocurrió un problema al registrar la cita médica.';
-        
-        $notificacion = 'La cita se ha registrado correctamente!';
     	return back()->with(compact('notificacion'));
-    	// return redirect('/consultamedica');
     }
 
     public function cancelarReservada(Request $request){
@@ -230,7 +181,7 @@ class ConsultaMedicaController extends Controller
 
         $myDate= Carbon::now();
         $obj = new CancelarConsulta();
-        $obj->fechaCancelada = $myDate->toDateString();; 
+        $obj->fechaCancelada = $myDate->toDateString(); 
         $obj->justificacion = $request->justificacion; 
         $obj->idConsultaMedica = $request->id; 
         $obj->idAbrogador = \Auth::user()->id; 

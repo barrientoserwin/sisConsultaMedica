@@ -9,7 +9,7 @@ use JWTAuth;
 class UserController extends Controller
 {
     public function show(){
-    	return auth()->user();
+    	return auth('api')->user();
     }
 
     public function update(Request $request){

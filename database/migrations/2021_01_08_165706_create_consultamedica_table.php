@@ -16,6 +16,7 @@ class CreateConsultamedicaTable extends Migration
         Schema::create('consultamedica', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
+            $table->date('fechaReserva');
             $table->date('fechaConsulta');
             $table->time('horaConsulta');
             $table->string('estado',40);

@@ -8,7 +8,7 @@
           <h3 class="mb-0">Registrar nueva cita</h3>
         </div>
         <div class="col text-right">
-          <a href="{{ url('patients') }}" class="btn btn-sm btn-default">
+          <a href="{{ url('paciente') }}" class="btn btn-sm btn-default">
             Cancelar y volver
           </a>
         </div>
