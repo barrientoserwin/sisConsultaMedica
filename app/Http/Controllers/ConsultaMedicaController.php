@@ -191,6 +191,15 @@ class ConsultaMedicaController extends Controller
         return redirect('/consultamedica')->with(compact('notificacion'));
     }
 
+    public function consultaAtendida(Request $request){
+        $consultamedica = ConsultaMedica::findOrFail($request->id); 
+        $consultamedica->estado = 'Atendida';
+        $consultamedica->save();
+
+        $notificacion = 'La consulta medica se ha marcado como atendida.';
+	    return back()->with(compact('notificacion'));
+    }
+
     public function verConsulta(Request $request){
         $consultamedica = DB::table('consultamedica as cm')
         ->join('users as u1', 'cm.idMedico', '=', 'u1.id')
@@ -217,5 +226,51 @@ class ConsultaMedicaController extends Controller
 
         $notificacion = 'La consulta medica se ha confirmado correctamente.';
         return redirect('/consultamedica')->with(compact('notificacion'));
+    }
+
+    public function misPacientes(){
+        $idMedico = \Auth::user()->id;
+
+        $cancelada = DB::table('consultamedica as cm')
+        ->join('users as u', 'cm.idPaciente', '=', 'u.id')
+        ->join('especialidad as e', 'cm.idEspecialidad', '=', 'e.id')
+        ->select('u.name','u.apellidos','cm.fechaReserva','cm.fechaConsulta','cm.horaConsulta','cm.tipoConsulta','cm.estado',
+        'e.nombre as nombreEspecialidad')
+        ->where('cm.idMedico', $idMedico)
+        ->where('cm.estado', 'Cancelada')
+        ->orderBy('cm.fechaConsulta','desc');
+
+        $atendida = DB::table('consultamedica as cm')
+        ->join('users as u', 'cm.idPaciente', '=', 'u.id')
+        ->join('especialidad as e', 'cm.idEspecialidad', '=', 'e.id')
+        ->select('u.name','u.apellidos','cm.fechaReserva','cm.fechaConsulta','cm.horaConsulta','cm.tipoConsulta','cm.estado',
+        'e.nombre as nombreEspecialidad')
+        ->where('cm.idMedico', $idMedico)
+        ->where('cm.estado', 'Atendida')
+        ->orderBy('cm.fechaConsulta','desc')
+        ->union($cancelada);
+
+        $reservada = DB::table('consultamedica as cm')
+        ->join('users as u', 'cm.idPaciente', '=', 'u.id')
+        ->join('especialidad as e', 'cm.idEspecialidad', '=', 'e.id')
+        ->select('u.name','u.apellidos','cm.fechaReserva','cm.fechaConsulta','cm.horaConsulta','cm.tipoConsulta','cm.estado',
+        'e.nombre as nombreEspecialidad')
+        ->where('cm.idMedico', $idMedico)
+        ->where('cm.estado', 'Reservada')
+        ->orderBy('cm.fechaConsulta','desc')
+        ->union($atendida);
+
+        $paciente = DB::table('consultamedica as cm')
+        ->join('users as u', 'cm.idPaciente', '=', 'u.id')
+        ->join('especialidad as e', 'cm.idEspecialidad', '=', 'e.id')
+        ->select('u.name','u.apellidos','cm.fechaReserva','cm.fechaConsulta','cm.horaConsulta','cm.tipoConsulta','cm.estado',
+        'e.nombre as nombreEspecialidad')
+        ->where('cm.idMedico', $idMedico)
+        ->where('cm.estado', 'Confirmada')
+        ->orderBy('cm.fechaConsulta','desc')
+        ->union($reservada)
+        ->get();
+
+        return view('medico.mispacientes', compact('paciente'));
     }
 }

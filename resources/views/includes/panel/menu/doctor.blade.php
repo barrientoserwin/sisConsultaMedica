@@ -9,7 +9,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="/paciente">
+  <a class="nav-link" href="/mispacientes">
     <i class="ni ni-satisfied text-info"></i> Mis pacientes
   </a>
 </li>

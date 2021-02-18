@@ -44,6 +44,7 @@
                 <form action="{{ url('/medico/delete/'.$item->id) }}" method="post">
                   @csrf
                   @method('DELETE')
+                  <a href="{{ url('/medico/verdetalles/'.$item->id) }}" class="btn btn-sm btn-light">Ver Detalles</a>
                   <a href="{{ url('/medico/edit/'.$item->id) }}" class="btn btn-sm btn-primary">Modificar</a>
                   <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                 </form>                

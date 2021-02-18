@@ -30,10 +30,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
 	Route::get('/user', 'UserController@show');
-	Route::post('/user', 'UserController@update');
+	Route::get('/listar/paciente', 'UserController@buscarPaciente');
+    Route::get('/listar/medico', 'UserController@buscarMedico');
 	Route::post('/logout', 'AuthController@logout');
 
 	// Consulta Medica
 	Route::get('/consultamedica', 'ConsultaMedicaController@index');
 	Route::post('/consultamedica/store', 'ConsultaMedicaController@store');
+    Route::get('/consultamedica/listar/hrc', 'ConsultaMedicaController@consultaMedicaHRC');
+    Route::post('/consultamedica/confirmar/reserva/{id}', 'ConsultaMedicaController@confirmarReserva');
+    Route::post('/consultamedica/cancelar/reserva/{id}', 'ConsultaMedicaController@cancelarReserva');
+    Route::post('/consultamedica/atendida/{id}', 'ConsultaMedicaController@confirmarAtendida');
+    Route::post('/consultamedica/cancelar/confirmada/{id}', 'ConsultaMedicaController@cancelarConfirmada');
+
+    //Especialidad
+    Route::post('/especialidad/guardar', 'EspecialidadController@guardar');
 });

@@ -17,9 +17,54 @@
                 <div class="form-group">
                   <div class="input-group input-group-alternative mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                      <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                     </div>
                     <input id="name" type="text" class="form-control" placeholder="Nombre" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                    </div>
+                    <input id="apellidos" type="text" class="form-control" placeholder="Apellidos" name="apellidos" value="{{ old('apellidos') }}" required autocomplete="apellidos" autofocus>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="ni ni-credit-card"></i></span>
+                        </div>
+                        <input id="dni" type="text" class="form-control" placeholder="Nro Carnet" name="dni" value="{{ old('dni') }}" required autocomplete="dni" autofocus>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative mb-3">
+                        <input id="fechaNac" type="date" class="form-control" placeholder="Fecha Nacimiento" name="fechaNac" value="{{ old('fechaNac') }}" required autocomplete="fechaNac" autofocus>
+                      </div>
+                    </div>
+                  </div>
+                </div>               
+                
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                    </div>
+                    <input id="telefono" type="text" class="form-control" placeholder="Nro Celular" name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-pin-3"></i></span>
+                    </div>
+                    <input id="direccion" type="text" class="form-control" placeholder="Dirección" name="direccion" value="{{ old('direccion') }}" autocomplete="direccion" autofocus>
                   </div>
                 </div>
                 <div class="form-group">

@@ -1,6 +1,4 @@
-//
 // Orders chart
-//
 
 $(function () {
 	var $chart = $('#chart-orders');
@@ -44,7 +42,7 @@ $(function () {
 				labels: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
 				datasets: [{
 					label: 'Citas médicas',
-					data: appointmentsByDay
+					data: consultamedicaPorDia
 				}]
 			}
 		});

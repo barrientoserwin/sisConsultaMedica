@@ -37,6 +37,7 @@ Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function () {
     Route::post('/medico/store', 'MedicoController@store');
     Route::put('/medico/update/{id}', 'MedicoController@update');
     Route::delete('/medico/delete/{id}', 'MedicoController@destroy');
+    Route::get('/medico/verdetalles/{id}', 'MedicoController@verDetalles');
 
     //Rutas Paciente
     Route::get('/paciente', 'PacienteController@index');
@@ -67,9 +68,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/consultamedica/cancelarConfir/{id}', 'ConsultaMedicaController@cancelarConfir');
     Route::post('/consultamedica/cancelarConfirmada/{id}', 'ConsultaMedicaController@cancelarConfirmada');
+    Route::post('/consultamedica/consultaAtend/{id}', 'ConsultaMedicaController@consultaAtendida');
 
     Route::get('/consultamedica/verConsulta/{id}', 'ConsultaMedicaController@verConsulta');	
     Route::post('/consultamedica/confirmar/{id}', 'ConsultaMedicaController@confirmarConsulta');
+
+    //Ruta paciente - Mis Pacientes
+    Route::get('/mispacientes', 'ConsultaMedicaController@misPacientes');
 
     //JSON
     //Route::get('/especialidad/medico/{id}', 'Api\EspecialidadController@medicos');

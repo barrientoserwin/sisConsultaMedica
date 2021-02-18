@@ -30,12 +30,19 @@
         <td>{{ $item->tipoConsulta }}</td>
         <td>
           @if ($rolUsuario == 'administrador')
-            <a class="btn btn-sm btn-primary" title="Ver cita" 
+            <a class="btn btn-sm btn-primary" data-toggle="tooltip" title="Ver cita" 
               href="{{ url('/consultamedica/verConsulta/'.$item->id) }}">
                 Ver
             </a>
           @endif
-          <a class="btn btn-sm btn-danger" title="Cancelar cita" 
+          @if ($rolUsuario == 'doctor')
+            <form action="{{ url('/consultamedica/consultaAtend/'.$item->id) }}" 
+              method="POST" class="d-inline-block">
+              @csrf
+              <button class="btn btn-sm btn-success" type="submit" data-toggle="tooltip" title="Marcar atendida">Atendida</button>
+            </form>
+          @endif
+          <a class="btn btn-sm btn-danger" data-toggle="tooltip" title="Cancelar cita" 
             href="{{ url('/consultamedica/cancelarConfir/'.$item->id) }}">
               Cancelar
           </a>

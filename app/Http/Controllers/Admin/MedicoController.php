@@ -121,4 +121,36 @@ class MedicoController extends Controller
         return redirect('/medico')->with(compact('notificacion'));
     }
 
+    private $dias = [
+        'Lunes', 
+        'Martes',
+        'Miércoles',
+        'Jueves',
+        'Viernes',
+        'Sábado',
+        'Domingo'
+    ];
+    
+    public function verDetalles(Request $request){
+        $idMedico = $request->id;
+
+        $medico = User::select('name','apellidos','email','dni','fechaNac','telefono','direccion')
+        ->where('users.id',$idMedico)
+        ->first();
+
+        $especialidad = MedicoEspecialidad::join('especialidad', 'medicoespecialidad.idEspecialidad', '=', 'especialidad.id')
+        ->select('especialidad.nombre')
+        ->where('medicoespecialidad.idMedico',$idMedico)
+        ->get(); 
+
+        $diastrabajo = DB::table('diastrabajo as dt')
+        ->select('dt.codDia','dt.estado','dt.turno1Inicio','dt.turno1Fin','dt.turno2Inicio','dt.turno2Fin')
+        ->where('dt.idMedico', $idMedico)
+        ->where('dt.estado', 1)
+        ->get();
+
+        $dias = $this->dias;
+        return view('medico.verdetalles', compact('medico', 'especialidad', 'diastrabajo','dias'));
+    }
+
 }
