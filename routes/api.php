@@ -29,9 +29,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/diastrabajo/hours', 'DiasTrabajoController@hours');
 
 Route::middleware('auth:api')->group(function () {
-	Route::get('/user', 'UserController@show');
-	Route::get('/listar/paciente', 'UserController@buscarPaciente');
-    Route::get('/listar/medico', 'UserController@buscarMedico');
+	Route::get('/user', 'UserController@show');    
 	Route::post('/logout', 'AuthController@logout');
 
 	// Consulta Medica
@@ -45,4 +43,15 @@ Route::middleware('auth:api')->group(function () {
 
     //Especialidad
     Route::post('/especialidad/guardar', 'EspecialidadController@guardar');
+
+    //Paciente
+    Route::get('/listar/paciente', 'UserController@buscarPaciente');
+    Route::post('/paciente/guardar', 'UserController@storePaciente');
+    Route::post('/user/eliminar/{id}', 'UserController@destroy');
+    Route::post('/paciente/modificar/{id}', 'UserController@updatePaciente');
+    //Medico
+    Route::get('/listar/medico', 'UserController@buscarMedico');
+    Route::post('/medico/guardar', 'UserController@storeMedico');
+    Route::post('/medico/modificar/{id}', 'UserController@updateMedico');
+    Route::post('/medico/eliminar/{id}', 'UserController@destroyMedico');
 });
